@@ -70,6 +70,19 @@ ________
 
 ## Host and Port Scanning
 
+###  Cheat Sheet
+
+|**Scanning Options**|**Description**|
+|---|---|
+|`10.129.2.28`|Scans the specified target.|
+|`-Pn`|Disables ICMP Echo requests.|
+|`-n`|Disables DNS resolution.|
+|`--disable-arp-ping`|Disables ARP ping.|
+|`--packet-trace`|Shows all packets sent and received.|
+|`-p 445`|Scans only the specified port.|
+|`--reason`|Displays the reason a port is in a particular state.|
+|`-sV`|Performs a service scan.|
+
 There are a total of 6 different states for a scanned port we can obtain:
 
 | **State**          | **Description**                                                                                                                                                                                         |
@@ -82,3 +95,18 @@ There are a total of 6 different states for a scanned port we can obtain:
 | `closed\|filtered` | This state only occurs in the **IP ID idle** scans and indicates that it was impossible to determine if the scanned port is closed or filtered by a firewall.                                           |
 
 By default nmap *scans the top 1000 TCP ports.* 
+
+### Filtered Ports
+
+When a port is shown as filtered, it can have several reasons. In most cases, `firewalls` have certain rules set to handle specific connections. The packets can either be `dropped`, or `rejected`. When a packet gets dropped, `Nmap` receives no response from our target, and by default, the retry rate (`--max-retries`) is set to `10`. This means `Nmap` will resend the request to the target port to determine if the previous packet was accidentally mishandled or not.
+
+### Discovering Open UDP Ports
+
+Some system administrators sometimes forget to filter the UDP ports in addition to the TCP ones. Since `UDP` is a `stateless protocol` and does not require a three-way handshake like TCP. We do not receive any acknowledgment. Consequently, the timeout is much longer, making the whole `UDP scan` (`-sU`) much slower than the `TCP scan` (`-sS`).
+
+Let's look at an example of what a UDP scan (`-sU`) can look like and what results it gives us.
+
+### Version Scan
+
+Another handy method for scanning ports is the `-sV` option which is used to get additional available information from the open ports. This method can identify versions, service names, and details about our target.
+
