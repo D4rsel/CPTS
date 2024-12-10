@@ -5,6 +5,8 @@ _______
 - [[#Introduction]]
 - [[#Host discovery]]
 - [[#Host and Port Scanning]]
+- [[#Service enumeration]]
+- [[#Saving the results]]
 
 _______
 
@@ -109,4 +111,103 @@ Let's look at an example of what a UDP scan (`-sU`) can look like and what resul
 ### Version Scan
 
 Another handy method for scanning ports is the `-sV` option which is used to get additional available information from the open ports. This method can identify versions, service names, and details about our target.
+
+________
+
+## Service enumeration
+
+We can also increase the `verbosity level` (`-v` / `-vv`), which will show us the open ports directly when `Nmap` detects them.
+
+*Banner grabbing:*                  **IMPORTANT:** It can give you info that nmap can't.
+
+```shell-session
+D4rsel@htb[/htb]$  nc -nv 10.129.2.28 25
+
+Connection to 10.129.2.28 port 25 [tcp/*] succeeded!
+220 inlane ESMTP Postfix (Ubuntu)
+
+
+
+┌─[us-academy-2]─[10.10.14.141]─[htb-ac-230701@htb-34l8ebpkr7]─[~]
+└──╼ [★]$ nc -nv 10.129.2.49 31337
+(UNKNOWN) [10.129.2.49] 31337 (?) open
+220 HTB{pr0F7pDv3r510nb4nn3r}
+```
+
+__________
+
+## Saving the results
+
+While we run various scans, we should always save the results. We can use these later to examine the differences between the different scanning methods we have used. `Nmap` can save the results in 3 different formats.
+
+- Normal output (`-oN`) with the `.nmap` file extension
+- Grepable output (`-oG`) with the `.gnmap` file extension
+- XML output (`-oX`) with the `.xml` file extension
+
+We can also specify the option (`-oA`) to save the results in all formats.
+
+### Style sheets
+
+With the XML output, we can easily create HTML reports that are easy to read, even for non-technical people. This is later very useful for documentation, as it presents our results in a detailed and clear way. To convert the stored results from XML format to HTML, we can use the tool `xsltproc`.
+
+  Saving the Results
+
+```shell-session
+D4rsel@htb[/htb]$ xsltproc target.xml -o target.html
+```
+
+If we now open the HTML file in our browser, we see a clear and structured presentation of our results.
+
+#### Nmap Report
+
+![image](https://academy.hackthebox.com/storage/modules/19/nmap-report.png)
+
+________
+
+## Nmap Scripts
+
+Nmap Scripting Engine (`NSE`) is another handy feature of `Nmap`. It provides us with the possibility to create scripts in Lua for interaction with certain services. There are a total of 14 categories into which these scripts can be divided:
+
+| **Category** | **Description**                                                                                                                         |
+| ------------ | --------------------------------------------------------------------------------------------------------------------------------------- |
+| `auth`       | Determination of authentication credentials.                                                                                            |
+| `broadcast`  | Scripts, which are used for host discovery by broadcasting and the discovered hosts, can be automatically added to the remaining scans. |
+| `brute`      | Executes scripts that try to log in to the respective service by brute-forcing with credentials.                                        |
+| `default`    | Default scripts executed by using the `-sC` option.                                                                                     |
+| `discovery`  | Evaluation of accessible services.                                                                                                      |
+| `dos`        | These scripts are used to check services for denial of service vulnerabilities and are used less as it harms the services.              |
+| `exploit`    | This category of scripts tries to exploit known vulnerabilities for the scanned port.                                                   |
+| `external`   | Scripts that use external services for further processing.                                                                              |
+| `fuzzer`     | This uses scripts to identify vulnerabilities and unexpected packet handling by sending different fields, which can take much time.     |
+| `intrusive`  | Intrusive scripts that could negatively affect the target system.                                                                       |
+| `malware`    | Checks if some malware infects the target system.                                                                                       |
+| `safe`       | Defensive scripts that do not perform intrusive and destructive access.                                                                 |
+| `version`    | Extension for service detection.                                                                                                        |
+| `vuln`       | Identification of specific vulnerabilities.                                                                                             |
+
+We have several ways to define the desired scripts in `Nmap`.
+
+#### Default Scripts
+
+  Nmap Scripting Engine
+
+```shell-session
+D4rsel@htb[/htb]$ sudo nmap <target> -sC
+```
+
+#### Specific Scripts Category
+
+  Nmap Scripting Engine
+
+```shell-session
+D4rsel@htb[/htb]$ sudo nmap <target> --script <category>
+```
+
+#### Defined Scripts
+
+  Nmap Scripting Engine
+
+```shell-session
+D4rsel@htb[/htb]$ sudo nmap <target> --script <script-name>,<script-name>,...
+```
 
