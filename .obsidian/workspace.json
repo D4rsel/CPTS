@@ -4,21 +4,21 @@
     "type": "split",
     "children": [
       {
-        "id": "b174478b56a5c1ff",
+        "id": "e35d3345a635f772",
         "type": "tabs",
         "children": [
           {
-            "id": "0069731304672afb",
+            "id": "5d7f70ad6234cd48",
             "type": "leaf",
             "state": {
               "type": "markdown",
               "state": {
-                "file": "NMAP/NMAP.md",
+                "file": "Footprinting/Foot-printing common services.md",
                 "mode": "source",
                 "source": false
               },
               "icon": "lucide-file",
-              "title": "NMAP"
+              "title": "Foot-printing common services"
             }
           }
         ]
@@ -161,12 +161,17 @@
       "command-palette:Open command palette": false
     }
   },
-  "active": "0069731304672afb",
+  "active": "5d7f70ad6234cd48",
   "lastOpenFiles": [
-    "PrivEsc/Linux Privesc.md",
-    "NMAP/NMAP.md",
+    "Footprinting/NMAP.md",
+    "Footprinting/Foot-printing common services.md",
+    "Untitled 1",
     "Untitled",
+    "Footprinting",
+    "Footprinting common services/Untitled.md",
     "Untitled.md",
+    "Footprinting common services",
+    "PrivEsc/Linux Privesc.md",
     "Introduction.md",
     "NMAP",
     "test.md",
